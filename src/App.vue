@@ -55,7 +55,23 @@ export default {
           name: 'name3',
           surname: 'surname3',
         },
-      ]
+      ],
+
+      // свойство хранит 2 css класса
+      classesRedBold: 'myRed myBold',
+
+      // Объект с CSS классами предназначен для того, чтобы удобно было реактивно назначать классы элементам
+      objectClasses: {
+        done: true,         // класс применится
+        selected:  false,   // класс не применится
+      },
+
+      // объект хранит свойство, через имя которого к тегу будет подставляться css-класс !!!
+      stylesObj: {
+        //
+        myRed: false,
+      },
+
     }
   },
 
@@ -125,6 +141,16 @@ export default {
     auth: function () {
       this.isAuth = true;
     },
+
+    setRed: function() {
+      // обращаемся к свойству объекта
+      this.stylesObj.myRed = true;
+    },
+
+    noRed: function() {
+      // обращаемся к свойству объекта
+      this.stylesObj.myRed = false;
+    }
   }
 }
 
@@ -228,10 +254,40 @@ export default {
       {{ elem }}
     </li>
   </ul>
+  <hr>
+
+  <h3> Применение стилей</h3>
+  <div>
+    <p :class="classesRedBold">применение стилей через свойство</p>
+
+    <p :class="objectClasses">применение объекта с классами</p>
+    <hr>
+
+    <p :class="stylesObj">"ТЕКСТ"</p>
+    <button @click="setRed">покрасить ТЕКСТ в красный, через свойство объекта</button> <br>
+    <button @click="noRed">вернуть исходный цвет ТЕКСТА, через свойство объекта</button>
+
+    <p :style="{color: 'green', 'font-size': '30px'}">
+      стили прописаны в теге
+    </p>
+  </div>
+
 
 
 </template>
 
 <style>
+/* стили для шаблона, будут применены только к этому шаблону */
+.myRed {
+   color: #ff0000;
+}
+
+.myBold {
+  font-weight: bold;
+}
+
+p.done {
+  text-decoration: line-through;
+}
 
 </style>
