@@ -37,6 +37,41 @@ export default {
 
       isAuth: false,
 
+      message: 'message: hello!',
+
+      numberPreview: 0,
+
+      numberPreviewSquare: 0,
+
+      numberSquare: 0,
+
+      checked: true,
+
+      // массив для хранения значений чекбоксов
+      checkedArray: [],
+
+      // свойство для хранения значения радиокнопки
+      radioValue: '',
+
+      // свойство для хранения значения селекта
+      selectedCar: '',
+
+      // массив для хранения значения селекта
+      animals : [
+        'cat',
+        'dog',
+        'cow',
+      ],
+
+      // свойство для хранения выбора юзера
+      agree: false,
+
+      // массив хранит буквы
+      letters: ['a', 'b', 'c', 'd', 'e', 'f'],
+      newLetter: '',
+
+
+
       // массив объектов
       // в шаблоне выводим через {{ user.name }}
       users: [
@@ -142,15 +177,36 @@ export default {
       this.isAuth = true;
     },
 
-    setRed: function() {
+    setRed: function () {
       // обращаемся к свойству объекта
       this.stylesObj.myRed = true;
     },
 
-    noRed: function() {
+    noRed: function () {
       // обращаемся к свойству объекта
       this.stylesObj.myRed = false;
-    }
+    },
+
+    getNumberSquare: function () {
+      this.numberSquare = this.numberPreviewSquare ** 2;
+    },
+
+    addLetter: function () {
+      // добавляем букву в массив
+      this.letters.push(this.newLetter);
+    },
+
+    removeLetter: function (index) {
+      // удаляем букву из массива
+      this.letters.splice(index, 1);
+    },
+
+    removeUser: function (id) {
+      // удаляем юзера из массива
+      this.users = this.users.filter((user) => {
+        return user.id !== id;
+      });
+    },
   }
 }
 
@@ -255,8 +311,9 @@ export default {
     </li>
   </ul>
   <hr>
+  <hr>
 
-  <h3> Применение стилей</h3>
+  <h1> Применение стилей</h1>
   <div>
     <p :class="classesRedBold">применение стилей через свойство</p>
 
@@ -267,10 +324,155 @@ export default {
     <button @click="setRed">покрасить ТЕКСТ в красный, через свойство объекта</button> <br>
     <button @click="noRed">вернуть исходный цвет ТЕКСТА, через свойство объекта</button>
 
-    <p :style="{color: 'green', 'font-size': '30px'}">
+    <p :style="{color: 'green', 'font-size': '24px'}">
       стили прописаны в теге
     </p>
   </div>
+  <hr>
+  <hr>
+
+
+  <h1>Формы</h1>
+  <!-- //  input связан с переменной "message", с помощью директивы v-model -->
+  <input v-model="message">
+
+  <!--  // выводим значение переменной "message"-->
+  <p>выводим значение переменной "message": {{ message }}</p>
+
+  <!--// выводим значение переменной "message", в верхнем регистре-->
+  <p>выводим значение переменной "message", в верхнем регистре: {{ message.toUpperCase() }}</p>
+  <hr>
+
+  <!--// ввод числа, для получения квадрата числа-->
+  <input v-model.number="numberPreview">
+  <p>квадрат числа: {{ numberPreview * numberPreview }}</p>
+  <hr>
+
+
+  <p>по нажатию на кнопку выведем квадрат введенного в инпут числа</p>
+  <!-- // примаем данные из инпута -->
+  <input v-model.number="numberPreviewSquare">
+
+  <!-- // вызываем обработчик события, которые вычисляет квадрат числа -->
+  <button @click="getNumberSquare">вывести квадрат числа</button>
+
+  <!-- // выводим вычисленное значение -->
+  <p>квадрат числа: {{ numberSquare }}</p>
+  <hr>
+
+
+  <h5>Работа с чекбоксами</h5>
+  <!-- // примаем данные из инпута -->
+  <input type="checkbox" v-model="checked">
+  <p>значение переменной "checked": {{ checked }}</p>
+  <p> чекбокс отмечен: {{ checked ? 'да' : 'нет' }}</p>
+  <hr>
+
+  <div>
+  <!-- // группа чекбоксов, связанные с одной переменной "checkedArray" -->
+    <input type="checkbox" id="ru" value="русский" v-model="checkedArray">русский
+    <input type="checkbox" id="en" value="английский" v-model="checkedArray">английский
+    <input type="checkbox" id="ger" value="немецкий" v-model="checkedArray">немецкий
+
+    <p>значение переменной "checkedArray": {{ checkedArray }}</p>
+
+    <p></p> выводим выбранные языки в виде списка
+    <ul>
+      <li v-for="lang in checkedArray">
+        {{ lang }}
+      </li>
+    </ul>
+  </div>
+  <hr>
+
+
+  <h5>Работа с радиокнопками</h5>
+  <!--  Работа с радиокнопками происходит аналогичным образом-->
+  <div>
+    <input type="radio" id="bmw" value="bmw" v-model="radioValue">BMW
+    <input type="radio" id="audi" value="audi" v-model="radioValue">Audi
+    <input type="radio" id="mercedes" value="mercedes" v-model="radioValue">Mercedes
+
+    <p>значение переменной "radioValue": {{ radioValue }}</p>
+  </div>
+  <hr>
+
+
+  <h5>Работа с выпадающим списком</h5>
+  <!--  Работа с выпадающим списком происходит аналогичным образом-->
+  <div>
+  <!--  // привязываем переменную "selectedCar" к выпадающему списку-->
+    <select v-model="selectedCar">
+      <option disabled value="">выберите машину</option>
+      <option value="bmw">BMW</option>
+      <option value="audi">Audi</option>
+      <option value="mercedes">Mercedes</option>
+    </select>
+
+    <p>значение переменной "selected": {{ selectedCar }}</p>
+  </div>
+  <hr>
+
+  <p>Теги option можно также создавать не в ручную, а с помощью цикла.</p>
+  <div>
+    <select v-model="animals">
+      <option v-for="animal in animals" >
+        {{ animal }}
+      </option>
+    </select>
+  </div>
+  <!--  // выведем выбранный элемент-->
+  <p>выбранный элемент: {{ animals }}</p>
+  <hr>
+
+
+<!--    // Можно реактивно блокировать элементы формы с помощью атрибута disabled-->
+  <div>
+    <input type="checkbox" id="checkbox" v-model="agree">
+    <label for="checkbox">согласен с условиями</label>
+<!--    // если не согласен с условиями, то кнопка отправить блокируется-->
+    <button v-bind:disabled="!agree">отправить</button>
+  </div>
+  <hr>
+
+
+<!--  // Выведем содержимое массива в виде списка:-->
+  <ul>
+    <li v-for="(item, index) in letters" :key="index">
+      {{ item }}
+    </li>
+  </ul>
+
+<!--  // Давайте теперь сделаем инпут и кнопку, по нажатию на которую текст инпута добавится в конец списка в качестве нового пункта:-->
+  <input type="text" v-model="newLetter">
+  <button @click="addLetter">добавить</button>
+
+<!--// Давайте сделаем кнопку реактивного удаления элементов из списка-->
+  <ul>
+    <li v-for="(item, index) in letters" :key="index">
+      {{ item }}
+      <button @click="removeLetter(index)">удалить</button>
+    </li>
+  </ul>
+  <hr>
+
+
+<!--  // Давайте сделаем кнопку реактивного удаления элементов из объекта-->
+  <ul>
+    <li v-for="(user, index) in users" :key="user.id">
+      {{ user.name }}
+      {{ user.surname}}
+      <br>
+      <button @click="removeUser(user.id)">удалить</button>
+      <br>
+<!-- редактирование -->
+      <input v-model="user.name">
+      <input v-model="user.surname">
+      <br><br>
+
+    </li>
+  </ul>
+
 
 
 
