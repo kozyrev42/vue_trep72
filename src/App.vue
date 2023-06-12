@@ -1,9 +1,19 @@
 <script>
+// импортируем компонент
+import MyComponentUser from './components/MyComponentUser.vue'
 // import HelloWorld from './components/HelloWorld.vue'
 // import TheWelcome from './components/TheWelcome.vue'
+
 export default {
   // name: 'App', // имя компонента
   name: 'App',
+
+
+  // регистрируем импортируемый компонет. Здесь мы указываем все компоненты, которые используются в этом компоненте
+  components: {
+    MyComponentUser
+  },
+
 
   // data() - это функция, которая возвращает объект
   // в этом объекте мы можем хранить свойства, которые будут доступны в шаблоне
@@ -214,6 +224,13 @@ export default {
 
 
 <template>
+
+
+  <!-- отображение подключенного компонента -->
+  <MyComponentUser />
+
+
+
   <!-- формирование ссылки в атребуте -->
   <a v-bind:href="hrefMy">{{ text }}</a>
 
