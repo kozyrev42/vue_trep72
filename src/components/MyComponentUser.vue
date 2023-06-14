@@ -1,6 +1,7 @@
 <script>
 
 // импортируем компонент
+import Step3  from "./Step3.vue";
 import Dochernii3 from './Dochernii3.vue';
 import Employee  from './Employee.vue';
 
@@ -8,6 +9,7 @@ import Employee  from './Employee.vue';
 export default {
 
   components: {
+    Step3,
     Dochernii3,
     Employee
   },
@@ -65,6 +67,10 @@ export default {
     <h1>MyComponentUser</h1>
     <p>{{ name }}</p>
 
+
+    <Step3/>
+
+
     <!-- // передаем данные в компонент, где будем принимать их через "props" -->
     <!-- @show="functionHelloMyComponentUser" // передача метода в дочерний компонент   -->
     <Dochernii3
@@ -92,7 +98,8 @@ export default {
   .MyComponentUser {
     background-color: #c9ee48;
     /*// высота блока*/
-    height: 1000px;
+    height: auto;
+    padding: 20px;
   }
 
 
