@@ -64,7 +64,7 @@ export default {
 
 <template>
   <div class="MyComponentUser">
-    <h1>MyComponentUser</h1>
+    <h1>MyComponentUser ++++</h1>
     <p>{{ name }}</p>
 
 
